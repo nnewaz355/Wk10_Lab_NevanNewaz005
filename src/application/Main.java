@@ -145,30 +145,37 @@ public class Main extends Application {
 			LocalDate dateAvailable = dateAvailableField.getValue();
 			String desiredPosition = desiredPositionTextField.getText().trim();
 			String desiredSalaryText = desiredSalaryTextField.getText().trim();
+			double desiredSalary;
 			boolean authorizedToWork = authorizedYes.isSelected(); //to be fixed
 			boolean hasRelatives = relativesYes.isSelected(); //to be fixed
 			String relativesExplanation = explanationTextField.getText().trim();
 			if (!StringPool.BLANK.equals(fullName) && !StringPool.BLANK.equals(currentAddress) && !StringPool.BLANK.equals(contactNumber) && !StringPool.BLANK.equals(emailAddress) && !StringPool.BLANK.equals(education) && !StringPool.BLANK.equals(gender) && dateAvailable != null && !StringPool.BLANK.equals(desiredPosition) && !StringPool.BLANK.equals(desiredSalaryText) && (authorizedYes.isSelected() || authorizedNo.isSelected()) && (relativesYes.isSelected() || relativesNo.isSelected())) {
 				try {
-						double desiredSalary = Double.parseDouble(desiredSalaryText);
 						
-						if (male.isSelected()) {
-							genderString = "Male";
-						}
-						else if (female.isSelected()) {
-							genderString = "Female";
-						}
-						else if (other.isSelected()) {
-							genderString = "Other";
-						}
+					try {
+						desiredSalary = Double.parseDouble(desiredSalaryText);
+					}catch(NumberFormatException e) {
+						this.alert("Error","Desired Salary must be a number.", AlertType.ERROR);
+						return;
+					}
 						
-						EmploymentForm employment = createEmploymentFormObject(fullName, currentAddress, contactNumber, emailAddress, education, genderString, dateAvailable, desiredPosition, desiredSalary, authorizedToWork, hasRelatives, relativesExplanation);
-						int employmentFormId = employmentFormDao.saveEmploymentForm(employment);
-						if (employmentFormId > 0) {
-							this.alert("Save", "Successful!", AlertType.INFORMATION);
-						} else {
-							this.alert("Error", "Failed!", AlertType.ERROR);
-						}
+					if (male.isSelected()) {
+						genderString = "Male";
+					}
+					else if (female.isSelected()) {
+						genderString = "Female";
+					}
+					else if (other.isSelected()) {
+						genderString = "Other";
+					}
+					
+					EmploymentForm employment = createEmploymentFormObject(fullName, currentAddress, contactNumber, emailAddress, education, genderString, dateAvailable, desiredPosition, desiredSalary, authorizedToWork, hasRelatives, relativesExplanation);
+					int employmentFormId = employmentFormDao.saveEmploymentForm(employment);
+					if (employmentFormId > 0) {
+						this.alert("Save", "Successful!", AlertType.INFORMATION);
+					} else {
+						this.alert("Error", "Failed!", AlertType.ERROR);
+					}
 				} catch (SQLException ex) {
 					System.out.println("Exception occured");
 					System.out.println(ex.getMessage());
