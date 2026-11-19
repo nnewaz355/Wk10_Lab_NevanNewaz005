@@ -154,7 +154,7 @@ public class Main extends Application {
 			boolean authorizedToWork = authorizedYes.isSelected(); //to be fixed
 			boolean hasRelatives = relativesYes.isSelected(); //to be fixed
 			String relativesExplanation = explanationTextField.getText().trim();
-			if (!StringPool.BLANK.equals(fullName) && !StringPool.BLANK.equals(currentAddress) && !StringPool.BLANK.equals(contactNumber) && !StringPool.BLANK.equals(emailAddress) && !StringPool.BLANK.equals(education) && !StringPool.BLANK.equals(gender) && dateAvailable != null && !StringPool.BLANK.equals(desiredPosition) && !StringPool.BLANK.equals(desiredSalaryText) && (authorizedYes.isSelected() || authorizedNo.isSelected()) && (relativesYes.isSelected() || relativesNo.isSelected())) {
+			if (!StringPool.BLANK.equals(fullName) && !StringPool.BLANK.equals(currentAddress) && !StringPool.BLANK.equals(contactNumber) && !StringPool.BLANK.equals(emailAddress) && !StringPool.BLANK.equals(education) && !StringPool.BLANK.equals(genderString) && dateAvailable != null && !StringPool.BLANK.equals(desiredPosition) && !StringPool.BLANK.equals(desiredSalaryText) && (authorizedYes.isSelected() || authorizedNo.isSelected()) && (relativesYes.isSelected() || relativesNo.isSelected())) {
 				try {
 						
 					try {
