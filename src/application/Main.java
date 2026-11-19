@@ -141,7 +141,7 @@ public class Main extends Application {
 			String contactNumber = contactNumberTextField.getText().trim();
 			String emailAddress = emailTextField.getText().trim();
 			String education = educationTextField.getText().trim();
-			String gender = null; //to be fixed
+			String genderString = null;
 			LocalDate dateAvailable = dateAvailableField.getValue();
 			String desiredPosition = desiredPositionTextField.getText().trim();
 			String desiredSalaryText = desiredSalaryTextField.getText().trim();
@@ -151,7 +151,18 @@ public class Main extends Application {
 			if (!StringPool.BLANK.equals(fullName) && !StringPool.BLANK.equals(currentAddress) && !StringPool.BLANK.equals(contactNumber) && !StringPool.BLANK.equals(emailAddress) && !StringPool.BLANK.equals(education) && !StringPool.BLANK.equals(gender) && dateAvailable != null && !StringPool.BLANK.equals(desiredPosition) && !StringPool.BLANK.equals(desiredSalaryText) && (authorizedYes.isSelected() || authorizedNo.isSelected()) && (relativesYes.isSelected() || relativesNo.isSelected())) {
 				try {
 						double desiredSalary = Double.parseDouble(desiredSalaryText);
-						EmploymentForm employment = createEmploymentFormObject(fullName, currentAddress, contactNumber, emailAddress, education, gender, dateAvailable, desiredPosition, desiredSalary, authorizedToWork, hasRelatives, relativesExplanation);
+						
+						if (male.isSelected()) {
+							genderString = "Male";
+						}
+						else if (female.isSelected()) {
+							genderString = "Female";
+						}
+						else if (other.isSelected()) {
+							genderString = "Other";
+						}
+						
+						EmploymentForm employment = createEmploymentFormObject(fullName, currentAddress, contactNumber, emailAddress, education, genderString, dateAvailable, desiredPosition, desiredSalary, authorizedToWork, hasRelatives, relativesExplanation);
 						int employmentFormId = employmentFormDao.saveEmploymentForm(employment);
 						if (employmentFormId > 0) {
 							this.alert("Save", "Successful!", AlertType.INFORMATION);
@@ -185,10 +196,6 @@ public class Main extends Application {
 		alert.setContentText(message);
 
 		alert.showAndWait();
-	}
-	public String getGender() {
-		if
-		return null;
 	}
 
 	public EmploymentForm createEmploymentFormObject(String fullName, String currentAddress, String contactNumber, String emailAddress, String education, String gender, LocalDate availabilityDate, String desiredPosition, Double desiredSalary, boolean authorizedToWork, boolean hasRelatives, String relativeExplanation) {
