@@ -18,7 +18,7 @@
 			try {
 				connection = Database.getDBConnection();
 				connection.setAutoCommit(false);
-				String query = "INSERT INTO application(full_name, address, phone, email, education, gender, availability_date, desired_position, desired_salary, authorized, relatives, explanation,  VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				String query = "INSERT INTO application(full_name, address, phone, email, education, gender, availability_date, desired_position, desired_salary, authorized, relatives, explanation)  VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 				int counter = 1;
 				statement.setString(counter++, employment.getFullName());
@@ -33,6 +33,7 @@
 				statement.setBoolean(counter++, employment.isAuthorizedToWork());
 				statement.setBoolean(counter++, employment.isHasRelatives());
 				statement.setString(counter++, employment.getRelativeExplanation());
+				System.out.println(statement);
 				statement.executeUpdate();
 				connection.commit();
 				resultSet = statement.getGeneratedKeys();
