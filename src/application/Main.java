@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -60,13 +61,13 @@ public class Main extends Application {
 
 		Label emailLabel = new Label("Email Address:");
 		grid.add(emailLabel, 0, 5);
-		TextField emailField = new TextField();
-		grid.add(emailField, 1, 5);
+		TextField emailTextField = new TextField();
+		grid.add(emailTextField, 1, 5);
 		
 		Label educationLabel = new Label("Highest Educational Attainment:");
 		grid.add(educationLabel, 0, 6);
-		TextField educationField = new TextField();
-		grid.add(educationField, 1, 6);
+		TextField educationTextField = new TextField();
+		grid.add(educationTextField, 1, 6);
 		
 		Label genderLabel = new Label("Gender:");
 		grid.add(genderLabel, 0, 7);
@@ -77,7 +78,7 @@ public class Main extends Application {
 		genderField.getChildren().addAll(male,female,other);
 		grid.add(genderField, 1, 7);
 		
-		Text eligibilityTitle = new Text("Personal Information");
+		Text eligibilityTitle = new Text("Employment Eligibility");
 		eligibilityTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
 		grid.add(eligibilityTitle, 0, 8, 2, 1);
 		
@@ -88,13 +89,13 @@ public class Main extends Application {
 		
 		Label desiredPositionLabel = new Label("Desired Position:");
 		grid.add(desiredPositionLabel, 0, 10);
-		TextField desiredPositionField = new TextField();
-		grid.add(desiredPositionField, 1, 10);
+		TextField desiredPositionTextField = new TextField();
+		grid.add(desiredPositionTextField, 1, 10);
 		
 		Label desiredSalaryLabel = new Label("Desired Salary:");
 		grid.add(desiredSalaryLabel, 0, 11);
-		TextField desiredSalaryField = new TextField();
-		grid.add(desiredSalaryField, 1, 11);
+		TextField desiredSalaryTextField = new TextField();
+		grid.add(desiredSalaryTextField, 1, 11);
 		
 		Label authorizedLabel = new Label("Are you legally authorized to work in the country?");
 		grid.add(authorizedLabel, 0, 12);
@@ -114,35 +115,39 @@ public class Main extends Application {
 		
 		Label explanationLabel = new Label("If yes, please explain further:");
 		grid.add(explanationLabel, 0, 14);
-		TextField explanationField = new TextField();
-		grid.add(explanationField, 1, 14);
+		TextField explanationTextField = new TextField();
+		grid.add(explanationTextField, 1, 14);
 		
 
 		Button applyButton = new Button("Apply");
 		HBox hBox = new HBox(10);
 		hBox.setAlignment(Pos.BOTTOM_RIGHT);
 		hBox.getChildren().add(applyButton);
-		grid.add(hBox, 1, 5);
+		grid.add(hBox, 1, 15);
 
 		applyButton.setOnAction(actionEvent -> {
-			String username = usernameTextField.getText().trim();
-			String lastName = lastNameTextField.getText().trim();
-			String firstName = firstNameTextField.getText().trim();
-			String password = passwordField.getText();
-			if (!StringPool.BLANK.equals(username) && !StringPool.BLANK.equals(lastName)
-					&& !StringPool.BLANK.equals(firstName) && !StringPool.BLANK.equals(password)) {
+			String fullName = fullNameTextField.getText().trim();
+			String currentAddress = currentAddressTextField.getText().trim();
+			String contactNumber = contactNumberTextField.getText().trim();
+			String emailAddress = emailTextField.getText().trim();
+			String education = educationTextField.getText().trim();
+			String gender = null; //to be fixed
+			LocalDate dateAvailable = dateAvailableField.getValue();
+			String desiredPosition = desiredPositionTextField.getText().trim();
+			String desiredSalaryText = desiredSalaryTextField.getText().trim();
+			boolean authorizedToWork = false; //to be fixed
+			boolean hasRelatives = false; //to be fixed
+			String relativesExplanation = explanationTextField.getText().trim();
+			if (!StringPool.BLANK.equals(fullName) && !StringPool.BLANK.equals(currentAddress) && !StringPool.BLANK.equals(contactNumber) && !StringPool.BLANK.equals(emailAddress) && !StringPool.BLANK.equals(education) && !StringPool.BLANK.equals(gender) && dateAvailable != null && !StringPool.BLANK.equals(desiredPosition) && !StringPool.BLANK.equals(desiredSalaryText)) {
 				try {
-					if (!employmentFormDao.userExists(username)) {
-						User user = this.createUserObject(username, lastName, firstName, password);
-						int userId = userDao.saveUser(user);
-						if (userId > 0) {
+						double desiredSalary = Double.parseDouble(desiredSalaryText);
+						EmploymentForm employment = createEmploymentFormObject(fullName, currentAddress, contactNumber, emailAddress, education, gender, dateAvailable, desiredPosition, desiredSalary, authorizedToWork, hasRelatives, relativesExplanation);
+						int employmentFormId = employmentFormDao.saveEmploymentForm(employment);
+						if (employmentFormId > 0) {
 							this.alert("Save", "Successful!", AlertType.INFORMATION);
 						} else {
 							this.alert("Error", "Failed!", AlertType.ERROR);
 						}
-					} else {
-						this.alert("Error", "User already exists!", AlertType.ERROR);
-					}
 				} catch (SQLException ex) {
 					System.out.println("Exception occured");
 					System.out.println(ex.getMessage());
@@ -157,8 +162,7 @@ public class Main extends Application {
 			}
 
 		});
-
-		Scene scene = new Scene(grid, 300, 275);
+		Scene scene = new Scene(grid, 1080, 720);
 		primaryStage.setScene(scene);
 
 		primaryStage.show();
