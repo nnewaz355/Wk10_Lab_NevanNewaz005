@@ -174,8 +174,18 @@ public class Main extends Application {
 						genderString = "Other";
 					}
 					
+					if (!contactNumber.matches("^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$")) {
+						this.alert("Error", "Please provide a valid phone number.", AlertType.ERROR);
+						return;
+					}
+					
 					if (hasRelatives && StringPool.BLANK.equals(relativesExplanation)) {
 						this.alert("Error", "Please explain about your relatives.", AlertType.ERROR);
+						return;
+					}
+					
+					if (!dateAvailable.isAfter(LocalDate.now())) {
+						this.alert("Error", "Please select a date after today.", AlertType.ERROR);
 						return;
 					}
 					
