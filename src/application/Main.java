@@ -174,6 +174,11 @@ public class Main extends Application {
 						genderString = "Other";
 					}
 					
+					if (hasRelatives && StringPool.BLANK.equals(relativesExplanation)) {
+						this.alert("Error", "Please explain about your relatives.", AlertType.ERROR);
+						return;
+					}
+					
 					EmploymentForm employment = createEmploymentFormObject(fullName, currentAddress, contactNumber, emailAddress, education, genderString, dateAvailable, desiredPosition, desiredSalary, authorizedToWork, hasRelatives, relativesExplanation);
 					int employmentFormId = employmentFormDao.saveEmploymentForm(employment);
 					if (employmentFormId > 0) {
