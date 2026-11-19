@@ -128,12 +128,17 @@ public class Main extends Application {
 		TextField explanationTextField = new TextField();
 		grid.add(explanationTextField, 1, 14);
 		
+		Label agreementLabel = new Label("By submitting this application, you agree to adhere to company policies and provide accurate information throughout the employment process.");
+		grid.add(agreementLabel, 0, 15);
+		Label signatureLabel = new Label("Applicant's Signature");
+		grid.add(signatureLabel, 1, 15);
+		
 
 		Button applyButton = new Button("Apply");
 		HBox hBox = new HBox(10);
-		hBox.setAlignment(Pos.BOTTOM_RIGHT);
+		hBox.setAlignment(Pos.BOTTOM_CENTER);
 		hBox.getChildren().add(applyButton);
-		grid.add(hBox, 1, 15);
+		grid.add(hBox, 1, 16);
 
 		applyButton.setOnAction(actionEvent -> {
 			String fullName = fullNameTextField.getText().trim();
