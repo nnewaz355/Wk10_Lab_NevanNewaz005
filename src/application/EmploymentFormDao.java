@@ -33,7 +33,6 @@
 				statement.setBoolean(counter++, employment.isAuthorizedToWork());
 				statement.setBoolean(counter++, employment.isHasRelatives());
 				statement.setString(counter++, employment.getRelativeExplanation());
-				System.out.println(statement);
 				statement.executeUpdate();
 				connection.commit();
 				resultSet = statement.getGeneratedKeys();
