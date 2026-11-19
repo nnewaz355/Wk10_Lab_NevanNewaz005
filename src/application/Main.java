@@ -128,7 +128,7 @@ public class Main extends Application {
 		TextField explanationTextField = new TextField();
 		grid.add(explanationTextField, 1, 14);
 		
-		Label agreementLabel = new Label("By submitting this application, you agree to adhere to company policies and provide accurate information throughout the employment process.");
+		Label agreementLabel = new Label("By submitting this application, you agree \nto adhere to company policies and \nprovide accurate information throughout \nthe employment process.");
 		grid.add(agreementLabel, 0, 15);
 		Label signatureLabel = new Label("Applicant's Signature");
 		grid.add(signatureLabel, 1, 15);
