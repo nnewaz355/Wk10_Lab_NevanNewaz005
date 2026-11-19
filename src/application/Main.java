@@ -8,12 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -40,33 +35,80 @@ public class Main extends Application {
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
 
-		Text scenetitle = new Text("Add User");
+		Text scenetitle = new Text("Employment Application");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid.add(scenetitle, 0, 0, 2, 1);
 
-		Label userNameLabel = new Label("Username:");
-		grid.add(userNameLabel, 0, 1);
+		Label fullNameLabel = new Label("Full Name:");
+		grid.add(fullNameLabel, 0, 1);
+		TextField fullNameTextField = new TextField();
+		grid.add(fullNameTextField, 1, 1);
+		
+		Label currentAddressLabel = new Label("Current Address:");
+		grid.add(currentAddressLabel, 0, 2);
+		TextField currentAddressTextField = new TextField();
+		grid.add(currentAddressTextField, 1, 2);
 
-		TextField usernameTextField = new TextField();
-		grid.add(usernameTextField, 1, 1);
+		Label contactNumberLabel = new Label("Contact Number:");
+		grid.add(contactNumberLabel, 0, 3);
+		TextField contactNumberTextField = new TextField();
+		grid.add(contactNumberTextField, 1, 3);
 
-		Label lastNameLabel = new Label("Last Name:");
-		grid.add(lastNameLabel, 0, 2);
-
-		TextField lastNameTextField = new TextField();
-		grid.add(lastNameTextField, 1, 2);
-
-		Label firstNameLabel = new Label("First Name:");
-		grid.add(firstNameLabel, 0, 3);
-
-		TextField firstNameTextField = new TextField();
-		grid.add(firstNameTextField, 1, 3);
-
-		Label passwordLabel = new Label("Password:");
-		grid.add(passwordLabel, 0, 4);
-
-		PasswordField passwordField = new PasswordField();
-		grid.add(passwordField, 1, 4);
+		Label emailLabel = new Label("Email Address:");
+		grid.add(emailLabel, 0, 4);
+		TextField emailField = new TextField();
+		grid.add(emailField, 1, 4);
+		
+		Label educationLabel = new Label("Highest Educational Attainment:");
+		grid.add(educationLabel, 0, 5);
+		TextField educationField = new TextField();
+		grid.add(educationField, 1, 5);
+		
+		Label genderLabel = new Label("Gender:");
+		grid.add(genderLabel, 0, 6);
+		RadioButton male = new RadioButton("Male");
+		RadioButton female = new RadioButton("Female");
+		RadioButton other = new RadioButton("Other");
+		HBox genderField = new HBox(20);
+		genderField.getChildren().addAll(male,female,other);
+		grid.add(genderField, 1, 6);
+		
+		Label dateAvailableLabel = new Label ("Date Available:");
+		grid.add(dateAvailableLabel, 0, 7);
+		DatePicker dateAvailableField = new DatePicker();
+		grid.add(dateAvailableField, 1, 7);
+		
+		Label desiredPositionLabel = new Label("Desired Position:");
+		grid.add(desiredPositionLabel, 0, 8);
+		TextField desiredPositionField = new TextField();
+		grid.add(desiredPositionField, 1, 8);
+		
+		Label desiredSalaryLabel = new Label("Desired Salary:");
+		grid.add(desiredSalaryLabel, 0, 9);
+		TextField desiredSalaryField = new TextField();
+		grid.add(desiredSalaryField, 1, 9);
+		
+		Label authorizedLabel = new Label("Are you legally authorized to work in the country?");
+		grid.add(authorizedLabel, 0, 10);
+		RadioButton authorizedYes = new RadioButton("Yes");
+		RadioButton authorizedNo = new RadioButton("No");
+		HBox authorizedField = new HBox(20);
+		authorizedField.getChildren().addAll(authorizedYes,authorizedNo);
+		grid.add(authorizedField, 1, 10);
+		
+		Label relativesLabel = new Label("Do you have relatives working for our company?");
+		grid.add(relativesLabel, 0, 11);
+		RadioButton relativesYes = new RadioButton("Yes");
+		RadioButton relativesNo = new RadioButton("No");
+		HBox relativesField = new HBox(20);
+		relativesField.getChildren().addAll(relativesYes,relativesNo);
+		grid.add(relativesField, 1, 11);
+		
+		Label explanationLabel = new Label("If yes, please explain further:");
+		grid.add(explanationLabel, 0, 12);
+		TextField explanationField = new TextField();
+		grid.add(explanationField, 1, 12);
+		
 
 		Button applyButton = new Button("Apply");
 		HBox hBox = new HBox(10);
@@ -82,7 +124,7 @@ public class Main extends Application {
 			if (!StringPool.BLANK.equals(username) && !StringPool.BLANK.equals(lastName)
 					&& !StringPool.BLANK.equals(firstName) && !StringPool.BLANK.equals(password)) {
 				try {
-					if (!userDao.userExists(username)) {
+					if (!employmentFormDao.userExists(username)) {
 						User user = this.createUserObject(username, lastName, firstName, password);
 						int userId = userDao.saveUser(user);
 						if (userId > 0) {
