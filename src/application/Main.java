@@ -74,6 +74,10 @@ public class Main extends Application {
 		RadioButton male = new RadioButton("Male");
 		RadioButton female = new RadioButton("Female");
 		RadioButton other = new RadioButton("Other");
+		ToggleGroup gender = new ToggleGroup();
+		male.setToggleGroup(gender);
+		female.setToggleGroup(gender);
+		other.setToggleGroup(gender);
 		HBox genderField = new HBox(20);
 		genderField.getChildren().addAll(male,female,other);
 		grid.add(genderField, 1, 7);
@@ -101,14 +105,20 @@ public class Main extends Application {
 		grid.add(authorizedLabel, 0, 12);
 		RadioButton authorizedYes = new RadioButton("Yes");
 		RadioButton authorizedNo = new RadioButton("No");
+		ToggleGroup authorized = new ToggleGroup();
+		authorizedYes.setToggleGroup(authorized);
+		authorizedNo.setToggleGroup(authorized);
 		HBox authorizedField = new HBox(20);
-		authorizedField.getChildren().addAll(authorizedYes,authorizedNo);
+		authorizedField.getChildren().addAll(authorizedYes, authorizedNo);
 		grid.add(authorizedField, 1, 12);
 		
 		Label relativesLabel = new Label("Do you have relatives working for our company?");
 		grid.add(relativesLabel, 0, 13);
 		RadioButton relativesYes = new RadioButton("Yes");
 		RadioButton relativesNo = new RadioButton("No");
+		ToggleGroup relatives = new ToggleGroup();
+		relativesYes.setToggleGroup(relatives);
+		relativesNo.setToggleGroup(relatives);
 		HBox relativesField = new HBox(20);
 		relativesField.getChildren().addAll(relativesYes,relativesNo);
 		grid.add(relativesField, 1, 13);
@@ -135,10 +145,10 @@ public class Main extends Application {
 			LocalDate dateAvailable = dateAvailableField.getValue();
 			String desiredPosition = desiredPositionTextField.getText().trim();
 			String desiredSalaryText = desiredSalaryTextField.getText().trim();
-			boolean authorizedToWork = false; //to be fixed
-			boolean hasRelatives = false; //to be fixed
+			boolean authorizedToWork = authorizedYes.isSelected(); //to be fixed
+			boolean hasRelatives = relativesYes.isSelected(); //to be fixed
 			String relativesExplanation = explanationTextField.getText().trim();
-			if (!StringPool.BLANK.equals(fullName) && !StringPool.BLANK.equals(currentAddress) && !StringPool.BLANK.equals(contactNumber) && !StringPool.BLANK.equals(emailAddress) && !StringPool.BLANK.equals(education) && !StringPool.BLANK.equals(gender) && dateAvailable != null && !StringPool.BLANK.equals(desiredPosition) && !StringPool.BLANK.equals(desiredSalaryText)) {
+			if (!StringPool.BLANK.equals(fullName) && !StringPool.BLANK.equals(currentAddress) && !StringPool.BLANK.equals(contactNumber) && !StringPool.BLANK.equals(emailAddress) && !StringPool.BLANK.equals(education) && !StringPool.BLANK.equals(gender) && dateAvailable != null && !StringPool.BLANK.equals(desiredPosition) && !StringPool.BLANK.equals(desiredSalaryText) && (authorizedYes.isSelected() || authorizedNo.isSelected()) && (relativesYes.isSelected() || relativesNo.isSelected())) {
 				try {
 						double desiredSalary = Double.parseDouble(desiredSalaryText);
 						EmploymentForm employment = createEmploymentFormObject(fullName, currentAddress, contactNumber, emailAddress, education, gender, dateAvailable, desiredPosition, desiredSalary, authorizedToWork, hasRelatives, relativesExplanation);
@@ -175,6 +185,10 @@ public class Main extends Application {
 		alert.setContentText(message);
 
 		alert.showAndWait();
+	}
+	public String getGender() {
+		if
+		return null;
 	}
 
 	public EmploymentForm createEmploymentFormObject(String fullName, String currentAddress, String contactNumber, String emailAddress, String education, String gender, LocalDate availabilityDate, String desiredPosition, Double desiredSalary, boolean authorizedToWork, boolean hasRelatives, String relativeExplanation) {
