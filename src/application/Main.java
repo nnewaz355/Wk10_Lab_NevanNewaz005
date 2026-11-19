@@ -28,7 +28,7 @@ public class Main extends Application {
 		EmploymentFormDao employmentFormDao = new EmploymentFormDao();
 
 		
-		primaryStage.setTitle("John Comany | Employment Applicaton");
+		primaryStage.setTitle("John Company");
 
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
